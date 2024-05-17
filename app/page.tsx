@@ -1,13 +1,14 @@
 "use client";
-
-// pages/index.js
-
 import { useState } from "react";
 import NFAtoDFAConverter from "../lib/nfaToDfaConverter";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DfaVisualization from "../components/DfaVisualization";
 import NfaVisualization from "../components/NfaVisualization";
+import TransitionTable from "../components/TransitionTable";
+import FormalLanguage from "../components/FormalLanguage";
+import { generateTransitionTable } from "../lib/transitionTable";
+import { generateFormalLanguage } from "../lib/formalLanguage";
 import styles from "../styles/Home.module.css";
 
 const IndexPage = () => {
@@ -21,6 +22,10 @@ const IndexPage = () => {
 
   const [dfa, setDfa] = useState(null);
   const [parsedNfa, setParsedNfa] = useState(null);
+  const [nfaTable, setNfaTable] = useState([]);
+  const [dfaTable, setDfaTable] = useState([]);
+  const [nfaFormalLanguage, setNfaFormalLanguage] = useState("");
+  const [dfaFormalLanguage, setDfaFormalLanguage] = useState("");
 
   const handleChange = (e) => {
     setNfa({ ...nfa, [e.target.name]: e.target.value });
@@ -44,6 +49,10 @@ const IndexPage = () => {
       const convertedDfa = converter.convert();
       setDfa(convertedDfa);
       setParsedNfa(formattedNfa);
+      setNfaTable(generateTransitionTable(formattedNfa));
+      setDfaTable(generateTransitionTable(convertedDfa));
+      setNfaFormalLanguage(generateFormalLanguage(formattedNfa, "NFA"));
+      setDfaFormalLanguage(generateFormalLanguage(convertedDfa, "DFA"));
     } catch (error) {
       console.error("Invalid JSON input:", error);
     }
@@ -100,23 +109,29 @@ const IndexPage = () => {
       >
         Convert to DFA
       </Button>
-      <div className="grid grid-cols-2">
-        {parsedNfa && (
-          <div className="mt-5 col-span-1">
-            <h2>NFA</h2>
-            <NfaVisualization nfa={parsedNfa} />
-            <pre>{JSON.stringify(parsedNfa, null, 2)}</pre>
-          </div>
-        )}
 
-        {dfa && (
-          <div className="mt-5 col-span-1">
-            <h2>DFA</h2>
-            <DfaVisualization dfa={dfa} />
-            <pre>{JSON.stringify(dfa, null, 2)}</pre>
-          </div>
-        )}
-      </div>
+{/*       {parsedNfa && (
+        <div style={{ marginTop: "40px" }}>
+          <h2>NFA</h2>
+          <pre>{JSON.stringify(parsedNfa, null, 2)}</pre>
+          <NfaVisualization nfa={parsedNfa} />
+          <h3>Transition Table</h3>
+          <TransitionTable table={nfaTable} />
+          <h3>Formal Language Representation</h3>
+          <FormalLanguage formalLanguage={nfaFormalLanguage} />
+        </div>
+      )} */}
+
+      {dfa && (
+        <div style={{ marginTop: "40px" }}>
+          <h2>DFA</h2>
+          <DfaVisualization dfa={dfa} />
+          <h3>Transition Table</h3>
+          <TransitionTable table={dfaTable} />
+          <h3>Formal Language Representation</h3>
+          <FormalLanguage formalLanguage={dfaFormalLanguage} />
+        </div>
+      )}
     </div>
   );
 };
