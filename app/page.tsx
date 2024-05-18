@@ -4,7 +4,6 @@ import NFAtoDFAConverter from "../lib/nfaToDfaConverter";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import DfaVisualization from "../components/DfaVisualization";
-import NfaVisualization from "../components/NfaVisualization";
 import TransitionTable from "../components/TransitionTable";
 import FormalLanguage from "../components/FormalLanguage";
 import { generateTransitionTable } from "../lib/transitionTable";
@@ -21,13 +20,10 @@ const IndexPage = () => {
   });
 
   const [dfa, setDfa] = useState(null);
-  const [parsedNfa, setParsedNfa] = useState(null);
-  const [nfaTable, setNfaTable] = useState([]);
   const [dfaTable, setDfaTable] = useState([]);
-  const [nfaFormalLanguage, setNfaFormalLanguage] = useState("");
   const [dfaFormalLanguage, setDfaFormalLanguage] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setNfa({ ...nfa, [e.target.name]: e.target.value });
   };
 
@@ -46,12 +42,9 @@ const IndexPage = () => {
       };
 
       const converter = new NFAtoDFAConverter(formattedNfa);
-      const convertedDfa = converter.convert();
+      const convertedDfa: any = converter.convert();
       setDfa(convertedDfa);
-      setParsedNfa(formattedNfa);
-      setNfaTable(generateTransitionTable(formattedNfa));
       setDfaTable(generateTransitionTable(convertedDfa));
-      setNfaFormalLanguage(generateFormalLanguage(formattedNfa, "NFA"));
       setDfaFormalLanguage(generateFormalLanguage(convertedDfa, "DFA"));
     } catch (error) {
       console.error("Invalid JSON input:", error);
@@ -110,26 +103,24 @@ const IndexPage = () => {
         Convert to DFA
       </Button>
 
-{/*       {parsedNfa && (
-        <div style={{ marginTop: "40px" }}>
-          <h2>NFA</h2>
-          <pre>{JSON.stringify(parsedNfa, null, 2)}</pre>
-          <NfaVisualization nfa={parsedNfa} />
-          <h3>Transition Table</h3>
-          <TransitionTable table={nfaTable} />
-          <h3>Formal Language Representation</h3>
-          <FormalLanguage formalLanguage={nfaFormalLanguage} />
-        </div>
-      )} */}
-
       {dfa && (
-        <div style={{ marginTop: "40px" }}>
-          <h2>DFA</h2>
-          <DfaVisualization dfa={dfa} />
-          <h3>Transition Table</h3>
-          <TransitionTable table={dfaTable} />
-          <h3>Formal Language Representation</h3>
-          <FormalLanguage formalLanguage={dfaFormalLanguage} />
+        <div className="flex flex-col justify-start items-center mt-5 gap-10">
+          <div className="w-full">
+            <h2 className="font-semibold text-center text-[24px]">DFA</h2>
+            <DfaVisualization dfa={dfa} />
+          </div>
+          <div className="w-full">
+            <h2 className="font-semibold text-center text-[24px]">
+              Transition Table
+            </h2>
+            <TransitionTable table={dfaTable} />
+          </div>
+          <div className="w-full">
+            <h2 className="font-semibold text-center text-[24px]">
+              Formal Language Representation
+            </h2>
+            <FormalLanguage formalLanguage={dfaFormalLanguage} />
+          </div>
         </div>
       )}
     </div>

@@ -1,6 +1,4 @@
 "use client";
-// components/DfaVisualization.js
-
 import { useEffect, useRef } from "react";
 import { DataSet, Network } from "vis-network/standalone";
 
@@ -69,8 +67,7 @@ const DfaVisualization = ({ dfa }) => {
   return (
     <div
       ref={container}
-      className="h-[500px] border"
-      style={{ height: "500px" }}
+      className="w-full h-[500px] border-2 border-blue-400"
     />
   );
 };

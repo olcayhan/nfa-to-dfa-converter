@@ -1,8 +1,6 @@
-// components/FormalLanguage.js
-
 const FormalLanguage = ({ formalLanguage }) => {
   return (
-    <div style={{ whiteSpace: "pre-wrap", marginTop: "20px" }}>
+    <div className="border-[2px] border-blue-300 mt-4 whitespace-pre-wrap">
       {formalLanguage}
     </div>
   );
