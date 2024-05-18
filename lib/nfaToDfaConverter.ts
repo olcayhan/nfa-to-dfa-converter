@@ -1,3 +1,6 @@
+import { DFA } from "@/types/DFA";
+import { NFA } from "@/types/NFA";
+
 class NFAtoDFAConverter {
   nfa: NFA;
   dfa: DFA;

@@ -1,20 +1,20 @@
 "use client";
+import { DFA } from "@/types/DFA";
 import { useEffect, useRef } from "react";
 import { DataSet, Network } from "vis-network/standalone";
 
-const DfaVisualization = ({ dfa }: any) => {
+const DfaVisualization = ({ dfa }: { dfa: DFA }) => {
   const container = useRef<any>(null);
 
   useEffect(() => {
     if (!dfa) return;
 
     const nodes = new DataSet(
-      dfa.states.map((state: any, index: number) => ({
+      dfa.states.map((state, index) => ({
         id: index,
         label: state.join(", "),
         shape: dfa.acceptStates.some(
-          (acceptState: any) =>
-            JSON.stringify(acceptState) === JSON.stringify(state)
+          (acceptState) => JSON.stringify(acceptState) === JSON.stringify(state)
         )
           ? "ellipse"
           : "circle",
@@ -25,10 +25,10 @@ const DfaVisualization = ({ dfa }: any) => {
       Object.entries(dfa.transitions).map(([key, value]) => {
         const [fromState, symbol] = key.split("-");
         const fromStateIndex = dfa.states.findIndex(
-          (state: any) => JSON.stringify(state) === fromState
+          (state) => JSON.stringify(state) === fromState
         );
         const toStateIndex = dfa.states.findIndex(
-          (state: any) => JSON.stringify(state) === JSON.stringify(value)
+          (state) => JSON.stringify(state) === JSON.stringify(value)
         );
         return {
           id: key,

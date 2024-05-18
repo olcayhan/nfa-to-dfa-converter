@@ -1,4 +1,6 @@
-const FormalLanguage = ({ formalLanguage }: any) => {
+import { NFAPure } from "@/types/NFA";
+
+const FormalLanguage = ({ formalLanguage }: { formalLanguage: NFAPure }) => {
   return (
     <div className="border-[2px] border-blue-300 mt-4 text-center">
       <div className="flex flex-col justify-start items-center gap-4 p-3">

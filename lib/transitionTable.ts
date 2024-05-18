@@ -1,3 +1,5 @@
+import { DFA } from "@/types/DFA";
+
 export const generateTransitionTable = (automaton: DFA) => {
   const table = [];
   for (const state of automaton.states) {

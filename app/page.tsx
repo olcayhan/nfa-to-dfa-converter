@@ -9,6 +9,8 @@ import FormalLanguage from "../components/FormalLanguage";
 import { generateTransitionTable } from "../lib/transitionTable";
 import { generateFormalLanguage } from "../lib/formalLanguage";
 import styles from "../styles/Home.module.css";
+import { NFAPure } from "@/types/NFA";
+import { DFA } from "@/types/DFA";
 
 const IndexPage = () => {
   const [nfa, setNfa] = useState<NFAPure>({
