@@ -8,7 +8,6 @@ import TransitionTable from "../components/TransitionTable";
 import FormalLanguage from "../components/FormalLanguage";
 import { generateTransitionTable } from "../lib/transitionTable";
 import { generateFormalLanguage } from "../lib/formalLanguage";
-import styles from "../styles/Home.module.css";
 import { NFAPure } from "@/types/NFA";
 import { DFA } from "@/types/DFA";
 
@@ -54,7 +53,7 @@ const IndexPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="max-w-[800px] mx-auto p-5">
       <h1 className="text-[32px] font-semibold">NFA to DFA Converter</h1>
       <TextField
         label="States (comma separated)"
