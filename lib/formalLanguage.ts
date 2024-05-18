@@ -6,12 +6,13 @@ export const generateFormalLanguage = (automaton: DFA) => {
   const startState = automaton.startState;
   const acceptStates = Array.from(automaton.acceptStates).join(" | ");
 
-  let transitions = "";
-  for (const [key, value] of Object.entries(automaton.transitions)) {
-    const [state, symbol] = key.split("-");
-    const nextState = Array.isArray(value) ? value.join(", ") : value;
-    transitions += `${state} --${symbol}--> ${nextState}\n`;
-  }
+  const transitions = Object.entries(automaton.transitions)
+    .map(([key, value]) => {
+      const [state, symbol] = key.split("-");
+      const nextState = Array.isArray(value) ? value.join(", ") : value;
+      return `${state} --${symbol}--> ${nextState}`;
+    })
+    .join("\n");
 
   return { states, alphabet, startState, acceptStates, transitions };
 };
