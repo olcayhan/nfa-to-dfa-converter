@@ -1,12 +1,10 @@
-// components/TransitionTable.js
-
 import React from "react";
 
-const TransitionTable = ({ table }) => {
+const TransitionTable = ({ table }: any) => {
   return (
     <div className="overflow-x-auto w-full border-[2px] border-blue-300">
       <table
-        border="1"
+        border={1}
         cellPadding="5"
         style={{ width: "100%", textAlign: "center", marginTop: "20px" }}
       >

@@ -1,4 +1,4 @@
-export const generateFormalLanguage = (automaton) => {
+export const generateFormalLanguage = (automaton: any) => {
   const states = Array.from(automaton.states).join(" | ");
   const alphabet = Array.from(automaton.alphabet).join(" | ");
   const startState = automaton.startState;

@@ -1,4 +1,4 @@
-export const generateTransitionTable = (automaton) => {
+export const generateTransitionTable = (automaton: any) => {
   const table = [];
   for (const state of automaton.states) {
     for (const symbol of automaton.alphabet) {

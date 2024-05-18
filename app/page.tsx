@@ -53,7 +53,9 @@ const IndexPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>NFA to DFA Converter</h1>
+      <h1 className="text-[32px] font-semibold">
+        NFA to DFA Converter
+      </h1>
       <TextField
         label="States (comma separated)"
         name="states"
