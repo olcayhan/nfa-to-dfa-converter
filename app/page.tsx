@@ -12,6 +12,27 @@ import { NFAPure } from "@/types/NFA";
 import { DFA } from "@/types/DFA";
 
 const IndexPage = () => {
+  const [transitions, setTransitions] = useState<any>({});
+  const [fromState, setFromState] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [toState, setToState] = useState("");
+
+  const handleAddTransition = () => {
+    if (fromState === "" || symbol === "" || toState === "") return;
+
+    if (!transitions[fromState]) {
+      setTransitions({ ...transitions, [fromState]: { [symbol]: [toState] } });
+    } else if (!transitions[fromState][symbol]) {
+      transitions[fromState][symbol] = [toState];
+    } else if (!transitions[fromState][symbol].includes(toState)) {
+      transitions[fromState][symbol].push(toState);
+    }
+
+    setFromState("");
+    setSymbol("");
+    setToState("");
+  };
+
   const [nfa, setNfa] = useState<NFAPure>({
     states: "",
     alphabet: "",
@@ -33,11 +54,7 @@ const IndexPage = () => {
       const formattedNfa: any = {
         states: new Set(nfa.states.split(",").map((s) => s.trim())),
         alphabet: new Set(nfa.alphabet.split(",").map((s) => s.trim())),
-        transitions: JSON.parse(
-          nfa.transitions
-            .replace(/(\w+):/g, '"$1":')
-            .replace(/:(\w+)/g, ':"$1"')
-        ),
+        transitions: transitions,
         startState: nfa.startState.trim(),
         acceptStates: new Set(nfa.acceptStates.split(",").map((s) => s.trim())),
       };
@@ -72,14 +89,6 @@ const IndexPage = () => {
         margin="normal"
       />
       <TextField
-        label="Transitions (JSON format)"
-        name="transitions"
-        value={nfa.transitions}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
         label="Start State"
         name="startState"
         value={nfa.startState}
@@ -95,6 +104,53 @@ const IndexPage = () => {
         fullWidth
         margin="normal"
       />
+      <div className="flex flex-row items-center justify-center gap-3 w-full">
+        <TextField
+          label="From State"
+          value={fromState}
+          onChange={(e) => setFromState(e.target.value)}
+        />
+        <TextField
+          label="Symbol"
+          value={symbol}
+          onChange={(e) => setSymbol(e.target.value)}
+        />
+        <TextField
+          label="To State"
+          value={toState}
+          onChange={(e) => setToState(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddTransition}
+        >
+          Add Transition
+        </Button>
+      </div>
+      {Object.keys(transitions).length > 0 && (
+        <div className="mt-5">
+          <h3 className="font-semibold text-[24px]">Transitions</h3>
+          <ul>
+            {Object.keys(transitions).map((transition, index) => {
+              return (
+                <li key={index}>
+                  {Object.keys(transitions[transition]).map((symbol, index) => {
+                    return (
+                      transition +
+                      "--" +
+                      symbol +
+                      "-->" +
+                      Object.values(transitions[transition][symbol]) +
+                      " | "
+                    );
+                  })}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
       <Button
         variant="contained"
         color="primary"
