@@ -2,7 +2,7 @@ import { NFAPure } from "@/types/NFA";
 
 const FormalLanguage = ({ formalLanguage }: { formalLanguage: NFAPure }) => {
   return (
-    <div className="border-[2px] border-blue-300 mt-4 text-center">
+    <div className="border-[2px] border-blue-300 text-center">
       <div className="flex flex-col justify-start items-center gap-4 p-3">
         <div className="w-full grid grid-cols-2 border-b-2 p-2">
           <p className="font-semibold col-span-1">States</p>
