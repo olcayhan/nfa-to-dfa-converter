@@ -1,4 +1,4 @@
-type DFA = {
+export type DFA = {
   states: string[][];
   alphabet: string[];
   transitions: { [transition: string]: string[] };

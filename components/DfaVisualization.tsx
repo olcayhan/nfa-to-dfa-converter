@@ -25,12 +25,13 @@ const DfaVisualization = ({ dfa }: any) => {
       Object.entries(dfa.transitions).map(([key, value]) => {
         const [fromState, symbol] = key.split("-");
         const fromStateIndex = dfa.states.findIndex(
-          (state) => JSON.stringify(state) === fromState
+          (state: any) => JSON.stringify(state) === fromState
         );
         const toStateIndex = dfa.states.findIndex(
-          (state) => JSON.stringify(state) === JSON.stringify(value)
+          (state: any) => JSON.stringify(state) === JSON.stringify(value)
         );
         return {
+          id: key,
           from: fromStateIndex,
           to: toStateIndex,
           label: symbol,

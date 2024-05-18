@@ -1,4 +1,4 @@
-type NFA = {
+export type NFA = {
   states: string[];
   alphabet: string[];
   transitions: { [state: string]: { [symbol: string]: string[] } };
@@ -6,7 +6,7 @@ type NFA = {
   acceptStates: Set<string>;
 };
 
-type NFAPure = {
+export type NFAPure = {
   states: string;
   alphabet: string;
   transitions: string;
