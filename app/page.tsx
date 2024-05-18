@@ -12,14 +12,23 @@ import { NFAPure } from "@/types/NFA";
 import { DFA } from "@/types/DFA";
 
 const IndexPage = () => {
+  const [dfa, setDfa] = useState<DFA | null>(null);
+  const [dfaTable, setDfaTable] = useState<any[]>([]);
+  const [dfaFormalLanguage, setDfaFormalLanguage] = useState<any>({});
   const [transitions, setTransitions] = useState<any>({});
   const [fromState, setFromState] = useState("");
   const [symbol, setSymbol] = useState("");
   const [toState, setToState] = useState("");
+  const [nfa, setNfa] = useState<NFAPure>({
+    states: "",
+    alphabet: "",
+    transitions: "",
+    startState: "",
+    acceptStates: "",
+  });
 
   const handleAddTransition = () => {
     if (fromState === "" || symbol === "" || toState === "") return;
-
     if (!transitions[fromState]) {
       setTransitions({ ...transitions, [fromState]: { [symbol]: [toState] } });
     } else if (!transitions[fromState][symbol]) {
@@ -33,24 +42,26 @@ const IndexPage = () => {
     setToState("");
   };
 
-  const [nfa, setNfa] = useState<NFAPure>({
-    states: "",
-    alphabet: "",
-    transitions: "",
-    startState: "",
-    acceptStates: "",
-  });
-
-  const [dfa, setDfa] = useState<DFA | null>(null);
-  const [dfaTable, setDfaTable] = useState<any[]>([]);
-  const [dfaFormalLanguage, setDfaFormalLanguage] = useState<any>({});
-
   const handleChange = (e: any) => {
     setNfa({ ...nfa, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = () => {
     try {
+      const validateInput = () => {
+        if (
+          nfa.states.trim() === "" ||
+          nfa.alphabet.trim() === "" ||
+          Object.keys(transitions).length === 0 ||
+          nfa.startState.trim() === "" ||
+          nfa.acceptStates.trim() === ""
+        ) {
+          throw new Error("Invalid input: All fields are required");
+        }
+      };
+
+      validateInput();
+
       const formattedNfa: any = {
         states: new Set(nfa.states.split(",").map((s) => s.trim())),
         alphabet: new Set(nfa.alphabet.split(",").map((s) => s.trim())),
