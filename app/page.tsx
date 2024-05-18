@@ -20,8 +20,8 @@ const IndexPage = () => {
   });
 
   const [dfa, setDfa] = useState(null);
-  const [dfaTable, setDfaTable] = useState([]);
-  const [dfaFormalLanguage, setDfaFormalLanguage] = useState("");
+  const [dfaTable, setDfaTable] = useState<any[]>([]);
+  const [dfaFormalLanguage, setDfaFormalLanguage] = useState<any>({});
 
   const handleChange = (e: any) => {
     setNfa({ ...nfa, [e.target.name]: e.target.value });
@@ -45,7 +45,7 @@ const IndexPage = () => {
       const convertedDfa: any = converter.convert();
       setDfa(convertedDfa);
       setDfaTable(generateTransitionTable(convertedDfa));
-      setDfaFormalLanguage(generateFormalLanguage(convertedDfa, "DFA"));
+      setDfaFormalLanguage(generateFormalLanguage(convertedDfa));
     } catch (error) {
       console.error("Invalid JSON input:", error);
     }
