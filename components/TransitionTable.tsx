@@ -16,7 +16,7 @@ const TransitionTable = ({ table }: any) => {
           </tr>
         </thead>
         <tbody>
-          {table.map((row, index) => (
+          {table.map((row: any, index: number) => (
             <tr key={index}>
               <td>{row.currentState}</td>
               <td>{row.symbol}</td>

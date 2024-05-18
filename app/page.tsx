@@ -11,7 +11,7 @@ import { generateFormalLanguage } from "../lib/formalLanguage";
 import styles from "../styles/Home.module.css";
 
 const IndexPage = () => {
-  const [nfa, setNfa] = useState({
+  const [nfa, setNfa] = useState<NFAPure>({
     states: "",
     alphabet: "",
     transitions: "",
@@ -19,7 +19,7 @@ const IndexPage = () => {
     acceptStates: "",
   });
 
-  const [dfa, setDfa] = useState(null);
+  const [dfa, setDfa] = useState<DFA | null>(null);
   const [dfaTable, setDfaTable] = useState<any[]>([]);
   const [dfaFormalLanguage, setDfaFormalLanguage] = useState<any>({});
 
@@ -29,7 +29,7 @@ const IndexPage = () => {
 
   const handleSubmit = () => {
     try {
-      const formattedNfa = {
+      const formattedNfa: any = {
         states: new Set(nfa.states.split(",").map((s) => s.trim())),
         alphabet: new Set(nfa.alphabet.split(",").map((s) => s.trim())),
         transitions: JSON.parse(
@@ -53,9 +53,7 @@ const IndexPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className="text-[32px] font-semibold">
-        NFA to DFA Converter
-      </h1>
+      <h1 className="text-[32px] font-semibold">NFA to DFA Converter</h1>
       <TextField
         label="States (comma separated)"
         name="states"

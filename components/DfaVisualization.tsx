@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { DataSet, Network } from "vis-network/standalone";
 
 const DfaVisualization = ({ dfa }: any) => {
-  const container = useRef<HTMLElement>(null);
+  const container = useRef<any>(null);
 
   useEffect(() => {
     if (!dfa) return;
@@ -25,10 +25,10 @@ const DfaVisualization = ({ dfa }: any) => {
       Object.entries(dfa.transitions).map(([key, value]) => {
         const [fromState, symbol] = key.split("-");
         const fromStateIndex = dfa.states.findIndex(
-          (state: any) => JSON.stringify(state) === fromState
+          (state) => JSON.stringify(state) === fromState
         );
         const toStateIndex = dfa.states.findIndex(
-          (state: any) => JSON.stringify(state) === JSON.stringify(value)
+          (state) => JSON.stringify(state) === JSON.stringify(value)
         );
         return {
           from: fromStateIndex,
@@ -39,7 +39,7 @@ const DfaVisualization = ({ dfa }: any) => {
       })
     );
 
-    const data = { nodes, edges };
+    const data: any = { nodes, edges };
 
     const options = {
       edges: {
